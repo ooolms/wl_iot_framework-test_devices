@@ -48,15 +48,17 @@ ControlsGroup mkControls()
 	cmd.buttonText="heater";
 	cmd.command="heat";
 	cmd.title="heater";
-	cmd.params.append(ControlParam("on",ControlParam::CHECKBOX));
+	cmd.params.append(ControlParam("heater",ControlParam::CHECKBOX));
 	grp.elements.append(ControlsGroup::Element(cmd));
 	cmd.buttonText="conditioner";
 	cmd.command="cond";
 	cmd.title="conditioner";
+	cmd.params[0].title="conditioner";
 	grp.elements.append(ControlsGroup::Element(cmd));
 	cmd.buttonText="humidifier";
 	cmd.command="hum";
 	cmd.title="humidifier";
+	cmd.params[0].title="humidifier";
 	grp.elements.append(ControlsGroup::Element(cmd));
 	return grp;
 }
