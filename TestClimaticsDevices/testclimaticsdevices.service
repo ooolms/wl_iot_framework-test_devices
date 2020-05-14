@@ -1,0 +1,11 @@
+[Unit]
+Description=Test climatics devices for wliotproxyd service
+After=network.target
+
+[Service]
+ExecStart=/usr/sbin/TEstClimaticsDevices
+Restart=always
+RestartSec=10s
+
+[Install]
+WantedBy=multi-user.target
