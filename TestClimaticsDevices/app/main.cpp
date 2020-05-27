@@ -1,12 +1,14 @@
 #include <QCoreApplication>
 #include <QTimer>
 #include <math.h>
-#include "IotServer.h"
-#include "IotServerDeviceBackend.h"
-#include "IotServerVirtualDeviceClient.h"
-#include "IotServerVirtualDeviceCallback.h"
-#include "IotServerStorage.h"
+#include "wliot/client/ServerInstance.h"
+#include "wliot/client/VirtualDeviceClient.h"
+#include "wliot/client/VirtualDeviceCallback.h"
+#include "wliot/storages/ISensorStorage.h"
 #include "StdQFile.h"
+
+using namespace WLIOT;
+using namespace WLIOTClient;
 
 void myMessageHandler(QtMsgType t,const QMessageLogContext &,const QString &s)
 {
@@ -30,8 +32,8 @@ const QByteArray meteoMeasName="meteo_meas";
 const QUuid meteoCtlId=QUuid("{7fe697a1-3e81-46df-85c1-4d8cd2f1e346}");
 const QByteArray meteoCtlName="meteo_ctl";
 
-IotServerVirtualDeviceClient *meteoMeas=0;
-IotServerVirtualDeviceClient *meteoCtl=0;
+VirtualDeviceClient *meteoMeas=0;
+VirtualDeviceClient *meteoCtl=0;
 
 QList<SensorDef> mkSensors()
 {
@@ -79,11 +81,11 @@ double temp=20;
 double hum=25;
 
 class CtlCallback
-	:public IotServerVirtualDeviceCallback
+	:public VirtualDeviceCallback
 {
 public:
-	explicit CtlCallback(IotServerVirtualDeviceClient *dev)
-		:IotServerVirtualDeviceCallback(dev){}
+	explicit CtlCallback(VirtualDeviceClient *dev)
+		:VirtualDeviceCallback(dev){}
 	virtual bool processCommand(const QByteArray &cmd,const QByteArrayList &args,QByteArrayList &retVal)override
 	{
 		Q_UNUSED(retVal)
@@ -169,7 +171,7 @@ int main(int argc,char *argv[])
 {
 	QCoreApplication app(argc,argv);
 	qInstallMessageHandler(&myMessageHandler);
-	IotServer srv;
+	ServerInstance srv;
 	srv.connection()->startConnectLocal();
 	if(!srv.connection()->waitForConnected())
 		return __LINE__;
@@ -184,7 +186,7 @@ int main(int argc,char *argv[])
 	if(!meteoCtl)return __LINE__;
 	meteoCtl->setDevEventsCallback(new CtlCallback(meteoCtl));
 
-	QObject::connect(srv.connection(),&IotServerConnection::disconnected,&app,&QCoreApplication::quit);
+	QObject::connect(srv.connection(),&ServerConnection::disconnected,&app,&QCoreApplication::quit);
 
 	QTimer tmr;
 	tmr.setInterval(5000);
