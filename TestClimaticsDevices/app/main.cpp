@@ -13,15 +13,15 @@ void myMessageHandler(QtMsgType t,const QMessageLogContext &,const QString &s)
 	QByteArray m=s.toUtf8();
 	if(t==QtDebugMsg||t==QtInfoMsg)
 	{
-		StdQFile::stdout()->write(m.constData(),m.size());
-		StdQFile::stdout()->write("\n",1);
-		StdQFile::stdout()->flush();
+		StdQFile::stdoutFile()->write(m.constData(),m.size());
+		StdQFile::stdoutFile()->write("\n",1);
+		StdQFile::stdoutFile()->flush();
 	}
 	else
 	{
-		StdQFile::stderr()->write(m.constData(),m.size());
-		StdQFile::stderr()->write("\n",1);
-		StdQFile::stderr()->flush();
+		StdQFile::stderrFile()->write(m.constData(),m.size());
+		StdQFile::stderrFile()->write("\n",1);
+		StdQFile::stderrFile()->flush();
 	}
 }
 
@@ -38,6 +38,15 @@ QList<SensorDef> mkSensors()
 	QList<SensorDef> retVal;
 	retVal.append(SensorDef(SensorDef::Type(SensorDef::F32,SensorDef::SINGLE,SensorDef::NO_TIME,1),"temp"));
 	retVal.append(SensorDef(SensorDef::Type(SensorDef::F32,SensorDef::SINGLE,SensorDef::NO_TIME,1),"hum"));
+	return retVal;
+}
+
+QList<SensorDef> mkCtlSensors()
+{
+	QList<SensorDef> retVal;
+	retVal.append(SensorDef(SensorDef::Type(SensorDef::U8,SensorDef::SINGLE,SensorDef::NO_TIME,1),"heat"));
+	retVal.append(SensorDef(SensorDef::Type(SensorDef::U8,SensorDef::SINGLE,SensorDef::NO_TIME,1),"hum"));
+	retVal.append(SensorDef(SensorDef::Type(SensorDef::U8,SensorDef::SINGLE,SensorDef::NO_TIME,1),"cond"));
 	return retVal;
 }
 
@@ -86,6 +95,7 @@ public:
 				heaterOn=on;
 				qDebug()<<"heat: "<<(heaterOn?"on":"off");
 				commandParamStateChanged("heat",0,(heaterOn?"1":"0"));
+				meteoCtl->sendVDevMeasurement("heat",QByteArrayList()<<(heaterOn?"1":"0"));
 			}
 			return true;
 		}
@@ -97,6 +107,7 @@ public:
 				conditionerOn=on;
 				qDebug()<<"conditioner: "<<(conditionerOn?"on":"off");
 				commandParamStateChanged("cond",0,(conditionerOn?"1":"0"));
+				meteoCtl->sendVDevMeasurement("cond",QByteArrayList()<<(conditionerOn?"1":"0"));
 			}
 			return true;
 		}
@@ -108,6 +119,7 @@ public:
 				humidifierOn=on;
 				qDebug()<<"humidifier: "<<(humidifierOn?"on":"off");
 				commandParamStateChanged("hum",0,(humidifierOn?"1":"0"));
+				meteoCtl->sendVDevMeasurement("hum",QByteArrayList()<<(humidifierOn?"1":"0"));
 			}
 			return true;
 		}
@@ -163,7 +175,7 @@ int main(int argc,char *argv[])
 		return __LINE__;
 	if(!srv.devices()->registerVirtualDevice(meteoMeasId,meteoMeasName,mkSensors(),ControlsGroup()))
 		return __LINE__;
-	if(!srv.devices()->registerVirtualDevice(meteoCtlId,meteoCtlName,QList<SensorDef>(),mkControls()))
+	if(!srv.devices()->registerVirtualDevice(meteoCtlId,meteoCtlName,mkCtlSensors(),mkControls()))
 		return __LINE__;
 
 	meteoMeas=srv.devices()->registeredVDev(meteoMeasId);
