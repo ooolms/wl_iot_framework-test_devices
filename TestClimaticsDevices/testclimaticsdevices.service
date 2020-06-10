@@ -3,7 +3,7 @@ Description=Test climatics devices for wliotproxyd service
 After=network.target
 
 [Service]
-ExecStart=/usr/sbin/TEstClimaticsDevices
+ExecStart=/usr/sbin/TestClimaticsDevices
 Restart=always
 RestartSec=10s
 

@@ -6,6 +6,6 @@ Project
 		"app",
 		"../../wl_iot_framework/wliotproxy-src/libwliotproxy",
 		"../../wl_iot_framework/wliotproxy-src/libwliotproxy-base",
-		"../../wl_iot_framework/wliotproxy-src/libGDIL",
+		"../../wl_iot_framework/wliotproxy-src/libVDIL",
 	]
 }
