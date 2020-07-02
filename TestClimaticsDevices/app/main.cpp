@@ -84,8 +84,6 @@ class CtlCallback
 	:public VirtualDeviceCallback
 {
 public:
-	explicit CtlCallback(VirtualDeviceClient *dev)
-		:VirtualDeviceCallback(dev){}
 	virtual bool processCommand(const QByteArray &cmd,const QByteArrayList &args,QByteArrayList &retVal)override
 	{
 		Q_UNUSED(retVal)
@@ -175,16 +173,16 @@ int main(int argc,char *argv[])
 	srv.connection()->startConnectLocal();
 	if(!srv.connection()->waitForConnected())
 		return __LINE__;
-	if(!srv.devices()->registerVirtualDevice(meteoMeasId,meteoMeasName,mkSensors(),ControlsGroup()))
+	CtlCallback cb;
+	if(!srv.devices()->registerVirtualDevice(meteoMeasId,meteoMeasName,mkSensors(),ControlsGroup(),QUuid(),0))
 		return __LINE__;
-	if(!srv.devices()->registerVirtualDevice(meteoCtlId,meteoCtlName,mkCtlSensors(),mkControls()))
+	if(!srv.devices()->registerVirtualDevice(meteoCtlId,meteoCtlName,mkCtlSensors(),mkControls(),QUuid(),&cb))
 		return __LINE__;
 
 	meteoMeas=srv.devices()->registeredVDev(meteoMeasId);
 	if(!meteoMeas)return __LINE__;
 	meteoCtl=srv.devices()->registeredVDev(meteoCtlId);
 	if(!meteoCtl)return __LINE__;
-	meteoCtl->setDevEventsCallback(new CtlCallback(meteoCtl));
 
 	QObject::connect(srv.connection(),&ServerConnection::disconnected,&app,&QCoreApplication::quit);
 
