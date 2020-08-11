@@ -179,7 +179,7 @@ void Room::setUFLamp(bool on)
 {
 //	if(ufLampOn==on)return;
 	ufLampOn=on;
-	emit meas("uflamp_on",(breezerOn?"1":"0"));
+	emit meas("uflamp_on",(ufLampOn?"1":"0"));
 	emit stateChanged("uflamp",0,(ufLampOn?"1":"0"));
 	updatePwrSens();
 }
@@ -187,7 +187,7 @@ void Room::setUFLamp(bool on)
 void Room::onUpdatePeopleCountTimer()
 {
 	peopleCount=newPeopleCount;
-	emit meas("people",peopleCount==0?"0":"1");
+	emit meas("people",QByteArray::number(peopleCount));
 	doorCloseTimer.start();
 }
 

@@ -70,7 +70,7 @@ void SimpleRoom::onStart()
 void SimpleRoom::onUpdatePeopleCountTimer()
 {
 	peopleCount=newPeopleCount;
-	emit meas("people",peopleCount==0?"0":"1");
+	emit meas("people",QByteArray::number(peopleCount));
 	doorCloseTimer.start();
 }
 
