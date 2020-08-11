@@ -16,8 +16,20 @@ QtApplication
 	}
 
 	files:[
+        "DeviceStructs.h",
+        "Outdoor.cpp",
+        "Outdoor.h",
+        "Room.cpp",
+        "Room.h",
+        "RoomCallback.cpp",
+        "RoomCallback.h",
+        "SimpleRoom.cpp",
+        "SimpleRoom.h",
+        "SimpleRoomCallback.cpp",
+        "SimpleRoomCallback.h",
         "StdQFile.cpp",
         "StdQFile.h",
+        "climatics_defines.h",
         "main.cpp",
     ]
 }

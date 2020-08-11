@@ -1,0 +1,4 @@
+#ifndef DEVICESTRUCTS_H
+#define DEVICESTRUCTS_H
+
+#endif // DEVICESTRUCTS_H
