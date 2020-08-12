@@ -5,13 +5,14 @@
 #include "wliot/client/VirtualDeviceCallback.h"
 #include "Outdoor.h"
 #include "RoomCallback.h"
+#include "SimpleRoomCallback.h"
 
 class ModelCallback
 	:public WLIOTClient::VirtualDeviceCallback
 {
 	Q_OBJECT
 public:
-	explicit ModelCallback(RoomDevice *r0,RoomDevice *r1,RoomDevice *r2);
+	explicit ModelCallback(RoomDevice *r0,RoomDevice *r1,RoomDevice *r2,SimpleRoomDevice *wcR);
 	void setOutdoor(Outdoor *o);
 	virtual bool processCommand(const QByteArray &cmd,const QByteArrayList &args,QByteArrayList &retVal)override;
 
@@ -21,6 +22,7 @@ private slots:
 private:
 	Outdoor *outdoor;
 	RoomDevice *room0,*room1,*room2;
+	SimpleRoomDevice *wcRoom;
 };
 
 #endif // MODELCALLBACK_H

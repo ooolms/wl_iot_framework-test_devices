@@ -13,7 +13,7 @@ class SimpleRoom
 	Q_OBJECT
 public:
 	explicit SimpleRoom(const QByteArray roomSuff,QObject *parent=nullptr);
-	void setPeopleCount(int c);
+	void setPeopleCount(quint32 c);
 	void setLight(bool on);
 	QList<WLIOT::SensorDef> mkSensors();
 	void onTimer();
@@ -32,7 +32,7 @@ private:
 	Outdoor *mOutdoor;
 	QTimer peopleUpdateTimer,doorCloseTimer;
 	QByteArray mRoomName;
-	int peopleCount,newPeopleCount;
+	quint32 peopleCount,newPeopleCount;
 	bool lightOn;
 };
 

@@ -86,6 +86,12 @@ ControlsGroup mkModelControls()
 	cmd.commandToExec="room2people";
 	cmd.title="room 3 people";
 	grp.elements.append(ControlsGroup::Element(cmd));
+
+	cmd.commandToExec="wcroompeople";
+	cmd.title="wc room people";
+	cmd.params[0].attributes["titles"]="0|1";
+	cmd.params[0].attributes["values"]="0|1";
+	grp.elements.append(ControlsGroup::Element(cmd));
 	return grp;
 }
 
@@ -96,7 +102,7 @@ SimpleRoomDevice wcRoom;
 QUuid modelDevId=QUuid("{ae0d946d-9a33-4c2b-95c4-59beacd2ed5f}");
 QByteArray modelDevName=QByteArray("model");
 
-ModelCallback modelCb(&room0,&room1,&room2);
+ModelCallback modelCb(&room0,&room1,&room2,&wcRoom);
 
 void onTimer()
 {

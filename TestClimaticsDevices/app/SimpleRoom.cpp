@@ -18,7 +18,7 @@ SimpleRoom::SimpleRoom(const QByteArray roomSuff,QObject *parent)
 	connect(&doorCloseTimer,&QTimer::timeout,this,&SimpleRoom::onDoorCloseTimer);
 }
 
-void SimpleRoom::setPeopleCount(int c)
+void SimpleRoom::setPeopleCount(quint32 c)
 {
 	if(peopleCount==c)return;
 	peopleUpdateTimer.stop();
