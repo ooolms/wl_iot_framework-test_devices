@@ -4,13 +4,18 @@
 
 using namespace WLIOTClient;
 
-ModelCallback::ModelCallback(Outdoor *out,RoomDevice *r0,RoomDevice *r1,RoomDevice *r2)
+ModelCallback::ModelCallback(RoomDevice *r0,RoomDevice *r1,RoomDevice *r2)
 {
-	outdoor=out;
+	outdoor=0;
 	room0=r1;
 	room1=r2;
 	room2=r0;
-	connect(out,&Outdoor::meas,this,&ModelCallback::onMeas);
+}
+
+void ModelCallback::setOutdoor(Outdoor *o)
+{
+	outdoor=o;
+	connect(outdoor,&Outdoor::meas,this,&ModelCallback::onMeas);
 }
 
 bool ModelCallback::processCommand(const QByteArray &cmd,const QByteArrayList &args,QByteArrayList &retVal)

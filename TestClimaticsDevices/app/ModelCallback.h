@@ -11,8 +11,8 @@ class ModelCallback
 {
 	Q_OBJECT
 public:
-	explicit ModelCallback(Outdoor *out,RoomDevice *r0,RoomDevice *r1,RoomDevice *r2);
-
+	explicit ModelCallback(RoomDevice *r0,RoomDevice *r1,RoomDevice *r2);
+	void setOutdoor(Outdoor *o);
 	virtual bool processCommand(const QByteArray &cmd,const QByteArrayList &args,QByteArrayList &retVal)override;
 
 private slots:

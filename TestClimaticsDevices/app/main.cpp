@@ -96,7 +96,7 @@ SimpleRoomDevice wcRoom;
 QUuid modelDevId=QUuid("{ae0d946d-9a33-4c2b-95c4-59beacd2ed5f}");
 QByteArray modelDevName=QByteArray("model");
 
-ModelCallback modelCb(&outdoor,&room0,&room1,&room2);
+ModelCallback modelCb(&room0,&room1,&room2);
 
 void onTimer()
 {
@@ -120,6 +120,7 @@ int main(int argc,char *argv[])
 	RoomCallback cbRoom0(&room0);
 	RoomCallback cbRoom1(&room1);
 	RoomCallback cbRoom2(&room2);
+	modelCb.setOutdoor(&outdoor);
 	VirtualDeviceClient *modelCli;
 
 	ServerInstance srv;
