@@ -67,8 +67,9 @@ bool ModelCallback::processCommand(const QByteArray &cmd,const QByteArrayList &a
 	return false;
 }
 
-void ModelCallback::onMeas(const QByteArray &sens, const QByteArray &val)
+void ModelCallback::onMeas(const QByteArray &sens,const QByteArray &val)
 {
+	qDebug()<<"model "<<sens<<":"<<val;
 	if(mDev)
 		mDev->sendVDevMeasurement(sens,QByteArrayList()<<val);
 }
