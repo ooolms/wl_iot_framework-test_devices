@@ -174,10 +174,10 @@ int main(int argc,char *argv[])
 	QCoreApplication app(argc,argv);
 	qInstallMessageHandler(&myMessageHandler);
 
-	wcRoom={QUuid("{00954b46-b561-44ce-b090-af636f063fea}"),QByteArray("room wc"),0,new SimpleRoom("wc")};
-	room0={QUuid("{671b0d33-f46a-4d6a-8945-777c51219156}"),QByteArray("room 1"),0,new Room(&outdoor,"1")};
-	room1={QUuid("{970c5056-f467-4800-bef4-a81dcdb8215e}"),QByteArray("room 2"),0,new Room(&outdoor,"2")};
-	room2={QUuid("{8208b075-956a-4699-bc13-8a10f099e813}"),QByteArray("room 3"),0,new Room(&outdoor,"3")};
+	wcRoom={QUuid("{00954b46-b561-44ce-b090-af636f063fea}"),QByteArray("room_wc"),0,new SimpleRoom("wc")};
+	room0={QUuid("{671b0d33-f46a-4d6a-8945-777c51219156}"),QByteArray("room_1"),0,new Room(&outdoor,"1")};
+	room1={QUuid("{970c5056-f467-4800-bef4-a81dcdb8215e}"),QByteArray("room_2"),0,new Room(&outdoor,"2")};
+	room2={QUuid("{8208b075-956a-4699-bc13-8a10f099e813}"),QByteArray("room_3"),0,new Room(&outdoor,"3")};
 	SimpleRoomCallback cbWcRoom(&wcRoom);
 	RoomCallback cbRoom0(&room0);
 	RoomCallback cbRoom1(&room1);
@@ -187,6 +187,8 @@ int main(int argc,char *argv[])
 	ServerInstance srv;
 	srv.connection()->startConnectLocal();
 	if(!srv.connection()->waitForConnected())
+		return __LINE__;
+	if(!srv.connection()->authenticateLocalFromRoot("climatics"))
 		return __LINE__;
 	wcRoom.cli=srv.devices()->registerVirtualDevice(wcRoom.uid,wcRoom.name,
 		wcRoom.room->mkSensors(),cbWcRoom.mkControls(),"",&cbWcRoom);
@@ -202,7 +204,7 @@ int main(int argc,char *argv[])
 	if(!room2.cli)return __LINE__;
 	modelCli=srv.devices()->registerVirtualDevice(modelDevId,modelDevName,
 		mkModelSensors(),mkModelControls(),"",&modelCb);
-	if(!room2.cli)return __LINE__;
+	if(!modelCli)return __LINE__;
 
 	QObject::connect(srv.connection(),&ServerConnection::disconnected,&app,&QCoreApplication::quit);
 

@@ -1,0 +1,163 @@
+<VDIL_program>
+ <runtime_vars>
+  <var dim="1" type="single" value="12" var_name="test"/>
+ </runtime_vars>
+ <virtual_device device_id="{4223ad13-8b40-4b31-ad7c-ff9f60212a8f}" device_name="vdil-test" enabled="0">
+  <controls>
+   <group title="Device controls">
+    <control button_text="Exec 1" command="exec1" title="Command 1">
+     <param title="chk1" type="checkbox">
+      <attributes onValue="1" offValue="0"/>
+     </param>
+     <param title="sld1" type="slider"/>
+    </control>
+   </group>
+  </controls>
+  <sensors>
+   <sensor name="sens1" type="f64_sv_nt"/>
+   <sensor name="sens2" type="f64_d2_pv_nt"/>
+  </sensors>
+ </virtual_device>
+ <blocks>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-780" id="1" name="storage_source" position_x="-1154" use_trigger="0" title="temp" need_device="0" count="1" sensor_name="temp" values_type="f32_sv_gt"/>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-809" cmd="heater" args="1" id="3" name="command" position_x="-371" title="heater on" inputs_count="1" enable_condition_input="0"/>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-698" cmd="heater" args="0" id="5" name="command" position_x="-371" title="heater off" inputs_count="1" enable_condition_input="0"/>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-491" cmd="cond" args="0" id="6" name="command" position_x="-406" title="conditioner off" inputs_count="1" enable_condition_input="0"/>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-590" cmd="cond" args="1" id="7" name="command" position_x="-388" title="conditioner on" inputs_count="1" enable_condition_input="0"/>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-682" id="9" name="storage_source" position_x="-1258" use_trigger="0" title="hum" need_device="0" count="1" sensor_name="hum" values_type="f32_sv_gt"/>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-390" cmd="humid" args="1" id="11" name="command" position_x="-395" title="humidifier on" inputs_count="1" enable_condition_input="0"/>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-295" cmd="humid" args="0" id="12" name="command" position_x="-397" title="humidifier off" inputs_count="1" enable_condition_input="0"/>
+  <block group="core" position_y="-733" output_block_x="391" id="24" name="subprogram" position_x="-857" title="climatics calc" input_block_y="9" output_block_y="63" input_block_x="-916">
+   <inputs>
+    <input dim="1" title="temp" type="single"/>
+    <input dim="1" title="hum" type="single"/>
+    <input dim="1" title="target_temp" type="single"/>
+    <input dim="1" title="target_hum" type="single"/>
+   </inputs>
+   <outputs>
+    <output dim="1" title="heater_on" type="bool"/>
+    <output dim="1" title="heater_off" type="bool"/>
+    <output dim="1" title="cond_on" type="bool"/>
+    <output dim="1" title="cond_off" type="bool"/>
+    <output dim="1" title="hum_on" type="bool"/>
+    <output dim="1" title="hum_off" type="bool"/>
+   </outputs>
+   <blocks>
+    <block group="core" position_y="180" vars="t" expr="t+1" id="35" name="math_exp" position_x="-668" title="tt+1"/>
+    <block group="core" position_y="-336" vars="t" expr="t-1" id="36" name="math_exp" position_x="-665" title="temp-1"/>
+    <block group="core" position_y="-497" out_mode="2bool" operation="&lt;" id="38" name="comparation" position_x="-296" title="t&lt;tt-1" external_v2_input="1" dim_index="0">
+     <dist_value dim="1" type="single" value="1"/>
+     <v2_value dim="1" type="single" value="0"/>
+    </block>
+    <block group="core" position_y="-87" out_mode="2bool" operation="&lt;" id="39" name="comparation" position_x="-176" title="t&lt;tt" external_v2_input="1" dim_index="0">
+     <dist_value dim="1" type="single" value="1"/>
+     <v2_value dim="1" type="single" value="0"/>
+    </block>
+    <block group="core" position_y="-249" out_mode="2bool" operation=">" id="40" name="comparation" position_x="-340" title="t>tt" external_v2_input="1" dim_index="0">
+     <dist_value dim="1" type="single" value="1"/>
+     <v2_value dim="1" type="single" value="0"/>
+    </block>
+    <block group="core" position_y="97" out_mode="2bool" operation=">" id="41" name="comparation" position_x="-340" title="t>tt+1" external_v2_input="1" dim_index="0">
+     <dist_value dim="1" type="single" value="1"/>
+     <v2_value dim="1" type="single" value="0"/>
+    </block>
+    <block group="core" position_y="559" vars="h" expr="h+5" id="42" name="math_exp" position_x="-619" title="th+5"/>
+    <block group="core" position_y="378" vars="h" expr="h-5" id="43" name="math_exp" position_x="-620" title="th-5"/>
+    <block group="core" position_y="531" out_mode="2bool" operation=">" id="44" name="comparation" position_x="-319" title="h>th+5" external_v2_input="1" dim_index="0">
+     <dist_value dim="1" type="single" value="1"/>
+     <v2_value dim="1" type="single" value="0"/>
+    </block>
+    <block group="core" position_y="323" out_mode="2bool" operation="&lt;" id="45" name="comparation" position_x="-319" title="h&lt;th-5" external_v2_input="1" dim_index="0">
+     <dist_value dim="1" type="single" value="1"/>
+     <v2_value dim="1" type="single" value="0"/>
+    </block>
+    <block group="core" position_y="-603" debug_string="t=${0}" id="57" name="debug" position_x="-469" title="" inputs_count="1"/>
+    <block group="core" position_y="-338" debug_string="tt-1=${0}" id="58" name="debug" position_x="-374" title="tt-1" inputs_count="1"/>
+   </blocks>
+   <links>
+    <link to_index="0" to="35" from="0" from_index="2"/>
+    <link to_index="0" to="36" from="0" from_index="2"/>
+    <link to_index="0" line_points="-740,-435" to="38" from="0" from_index="0"/>
+    <link to_index="1" to="38" from="36" from_index="0"/>
+    <link to_index="0" line_points="-637,-25" to="39" from="0" from_index="0"/>
+    <link to_index="1" line_points="-410,31" to="39" from="0" from_index="2"/>
+    <link to_index="0" line_points="-625,-187" to="40" from="0" from_index="0"/>
+    <link to_index="1" to="40" from="0" from_index="2"/>
+    <link to_index="0" line_points="-386,99;-386,158.751" to="41" from="0" from_index="0"/>
+    <link to_index="1" to="41" from="35" from_index="0"/>
+    <link to_index="0" to="42" from="0" from_index="3"/>
+    <link to_index="0" to="43" from="0" from_index="3"/>
+    <link to_index="0" line_points="-415,155;-415,593" to="44" from="0" from_index="1"/>
+    <link to_index="1" to="44" from="42" from_index="0"/>
+    <link to_index="0" line_points="-415,155;-415,385" to="45" from="0" from_index="1"/>
+    <link to_index="1" to="45" from="43" from_index="0"/>
+    <link to_index="0" line_points="-828,-541" to="57" from="0" from_index="0"/>
+    <link to_index="0" to="58" from="36" from_index="0"/>
+    <link to_index="0" line_points="203,-352;332,121" to="0" from="38" from_index="0"/>
+    <link to_index="1" line_points="1,-159;295,167" to="0" from="40" from_index="0"/>
+    <link to_index="2" to="0" from="41" from_index="0"/>
+    <link to_index="3" line_points="26,3;230,293" to="0" from="39" from_index="0"/>
+    <link to_index="4" to="0" from="45" from_index="0"/>
+    <link to_index="5" to="0" from="44" from_index="0"/>
+   </links>
+  </block>
+  <block group="core" position_y="-558" id="46" name="static_source" position_x="-1285" title="target_temp" configurable="1">
+   <value dim="1" type="single" value="24"/>
+  </block>
+  <block group="core" position_y="-431" id="47" name="static_source" position_x="-1285" title="target_hum" configurable="1">
+   <value dim="1" type="single" value="50"/>
+  </block>
+  <block group="core" position_y="-928" policy="sec" id="48" name="timer" position_x="-1254" title="timer" repeat_interval="10" configurable="0" start="2020-08-11T22:23:30"/>
+  <block group="core" position_y="-930" debug_string="activated" id="49" name="debug" position_x="-1033" title="timer dbg" inputs_count="1"/>
+  <block group="core" position_y="-286" id="50" name="datetime" position_x="-1299" title="minute of hour" outputs="min"/>
+  <block group="core" position_y="-347" out_mode="bool" operation="dist" id="51" name="comparation" position_x="-1045" title="if from 0 to 6" external_v2_input="0" dim_index="0">
+   <dist_value dim="1" type="single" value="3"/>
+   <v2_value dim="1" type="single" value="3"/>
+  </block>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-99" id="52" name="storage_source" position_x="-1316" use_trigger="0" title="people in the room" need_device="0" count="1" sensor_name="people" values_type="u8_sv_gt"/>
+  <block group="core" position_y="-79" out_mode="bool" operation="==" id="54" name="comparation" position_x="-969" title="=0" external_v2_input="0" dim_index="0">
+   <dist_value dim="1" type="single" value="1"/>
+   <v2_value dim="1" type="single" value="0"/>
+  </block>
+  <block group="logic" position_y="-176" id="55" name="and" position_x="-629" title="and"/>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-169" cmd="uflamp" args="${0}" id="56" name="command" position_x="-413" title="uf lamp" inputs_count="1" enable_condition_input="0"/>
+  <block group="core" position_y="-224" out_mode="bool" operation="dist" id="60" name="comparation" position_x="-1045" title="from 30 to 36" external_v2_input="0" dim_index="0">
+   <dist_value dim="1" type="single" value="3"/>
+   <v2_value dim="1" type="single" value="33"/>
+  </block>
+  <block group="logic" position_y="-307" id="61" name="or" position_x="-802" title="or"/>
+  <block group="core" position_y="-113" debug_string="people=${0}" id="62" name="debug" position_x="-1058" title="" inputs_count="1"/>
+  <block group="core" position_y="-439" debug_string="minutes=${0}" id="63" name="debug" position_x="-949" title="" inputs_count="1"/>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="2" id="64" name="storage_source" position_x="-782" use_trigger="0" title="co2" need_device="0" count="1" sensor_name="co2" values_type="u32_sv_gt"/>
+  <block group="core" position_y="5" out_mode="bool" operation=">" id="65" name="comparation" position_x="-591" title=">400" external_v2_input="0" dim_index="0">
+   <dist_value dim="1" type="single" value="1"/>
+   <v2_value dim="1" type="single" value="400"/>
+  </block>
+  <block dev_id="{671b0d33-f46a-4d6a-8945-777c51219156}" group="core" position_y="-11" cmd="breezer" args="${0}" id="66" name="command" position_x="-379" title="breezer" inputs_count="1" enable_condition_input="0"/>
+ </blocks>
+ <links>
+  <link to_index="0" to="3" from="24" from_index="0"/>
+  <link to_index="0" to="5" from="24" from_index="1"/>
+  <link to_index="0" to="6" from="24" from_index="3"/>
+  <link to_index="0" to="7" from="24" from_index="2"/>
+  <link to_index="0" to="11" from="24" from_index="4"/>
+  <link to_index="0" to="12" from="24" from_index="5"/>
+  <link to_index="0" to="24" from="1" from_index="0"/>
+  <link to_index="1" to="24" from="9" from_index="0"/>
+  <link to_index="2" to="24" from="46" from_index="0"/>
+  <link to_index="3" to="24" from="47" from_index="0"/>
+  <link to_index="0" to="49" from="48" from_index="0"/>
+  <link to_index="0" to="51" from="50" from_index="0"/>
+  <link to_index="0" to="54" from="52" from_index="0"/>
+  <link to_index="0" to="55" from="61" from_index="0"/>
+  <link to_index="1" to="55" from="54" from_index="0"/>
+  <link to_index="0" to="56" from="55" from_index="0"/>
+  <link to_index="0" to="60" from="50" from_index="0"/>
+  <link to_index="0" to="61" from="51" from_index="0"/>
+  <link to_index="1" to="61" from="60" from_index="0"/>
+  <link to_index="0" to="62" from="52" from_index="0"/>
+  <link to_index="0" line_points="-1075,-350" to="63" from="50" from_index="0"/>
+  <link to_index="0" to="65" from="64" from_index="0"/>
+  <link to_index="0" to="66" from="65" from_index="0"/>
+ </links>
+</VDIL_program>
