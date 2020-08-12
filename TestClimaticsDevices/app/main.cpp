@@ -72,23 +72,23 @@ ControlsGroup mkModelControls()
 	cmd.forceBtn=false;
 	cmd.params.removeAt(0);
 
+	cmd.title.clear();
 	cmd.commandToExec="room0people";
-	cmd.title="room 1 people";
-	cmd.params.append(ControlsCommandParam("count",ControlsCommandParam::SELECT));
+	cmd.params.append(ControlsCommandParam("room 1 people",ControlsCommandParam::SELECT));
 	cmd.params[0].attributes["titles"]="0|1|2";
 	cmd.params[0].attributes["values"]="0|1|2";
 	grp.elements.append(ControlsGroup::Element(cmd));
 
 	cmd.commandToExec="room1people";
-	cmd.title="room 2 people";
+	cmd.params[0].title="room 2 people";
 	grp.elements.append(ControlsGroup::Element(cmd));
 
 	cmd.commandToExec="room2people";
-	cmd.title="room 3 people";
+	cmd.params[0].title="room 3 people";
 	grp.elements.append(ControlsGroup::Element(cmd));
 
 	cmd.commandToExec="wcroompeople";
-	cmd.title="wc room people";
+	cmd.params[0].title="wc room people";
 	cmd.params[0].attributes["titles"]="0|1";
 	cmd.params[0].attributes["values"]="0|1";
 	grp.elements.append(ControlsGroup::Element(cmd));
