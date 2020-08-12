@@ -9,6 +9,13 @@ Outdoor::Outdoor(QObject *parent)
 	mLight=800;
 }
 
+void Outdoor::onTimer()
+{
+	emit meas("ext_temp",QByteArray::number(mTemp,'g',6));
+	emit meas("ext_hum",QByteArray::number(mHum,'g',6));
+	emit meas("ext_light",QByteArray::number(mLight));
+}
+
 void Outdoor::setTemp(double t)
 {
 	mTemp=t;

@@ -17,6 +17,8 @@ QtApplication
 
 	files:[
         "DeviceStructs.h",
+        "ModelCallback.cpp",
+        "ModelCallback.h",
         "Outdoor.cpp",
         "Outdoor.h",
         "Room.cpp",

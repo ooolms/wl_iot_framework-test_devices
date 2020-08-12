@@ -8,7 +8,7 @@
 #include "StdQFile.h"
 #include "RoomCallback.h"
 #include "SimpleRoomCallback.h"
-#include "Outdoor.h"
+#include "ModelCallback.h"
 
 using namespace WLIOT;
 using namespace WLIOTClient;
@@ -96,73 +96,11 @@ SimpleRoomDevice wcRoom;
 QUuid modelDevId=QUuid("{ae0d946d-9a33-4c2b-95c4-59beacd2ed5f}");
 QByteArray modelDevName=QByteArray("model");
 
-class ModelCallback
-	:public VirtualDeviceCallback
-{
-public:
-	virtual bool processCommand(const QByteArray &cmd,const QByteArrayList &args,QByteArrayList &retVal)override
-	{
-		qDebug()<<"model command: "<<cmd<<args;
-		if(cmd=="set_ext_temp"&&args.count()>0)
-		{
-			bool ok=false;
-			double temp=args[0].toDouble(&ok);
-			if(!ok)return false;
-			outdoor.setTemp(temp);
-			if(mDev)
-				mDev->sendVDevMeasurement("ext_temp",QByteArrayList()<<args[0]);
-			return true;
-		}
-		else if(cmd=="set_ext_hum"&&args.count()>0)
-		{
-			bool ok=false;
-			double hum=args[0].toDouble(&ok);
-			if(!ok)return false;
-			outdoor.setHum(hum);
-			if(mDev)
-				mDev->sendVDevMeasurement("ext_hum",QByteArrayList()<<args[0]);
-			return true;
-		}
-		else if(cmd=="set_ext_light"&&args.count()>0)
-		{
-			bool ok=false;
-			quint32 light=args[0].toUInt(&ok);
-			if(!ok)return false;
-			outdoor.setLight(light);
-			if(mDev)
-				mDev->sendVDevMeasurement("ext_light",QByteArrayList()<<args[0]);
-			return true;
-		}
-		else if(cmd=="room0people"&&args.count()>0)
-		{
-			bool ok=false;
-			quint32 cnt=args[0].toUInt(&ok);
-			if(!ok)return false;
-			room0.room->setPeopleCount(cnt);
-			return true;
-		}
-		else if(cmd=="room1people"&&args.count()>0)
-		{
-			bool ok=false;
-			quint32 cnt=args[0].toUInt(&ok);
-			if(!ok)return false;
-			room1.room->setPeopleCount(cnt);
-			return true;
-		}
-		else if(cmd=="room2people"&&args.count()>0)
-		{
-			bool ok=false;
-			quint32 cnt=args[0].toUInt(&ok);
-			if(!ok)return false;
-			room2.room->setPeopleCount(cnt);
-			return true;
-		}
-		return false;
-	}
-}modelCb;
+ModelCallback modelCb(&outdoor,&room0,&room1,&room2);
 
 void onTimer()
 {
+	outdoor.onTimer();
 	room0.room->onTimer();
 	room1.room->onTimer();
 	room2.room->onTimer();

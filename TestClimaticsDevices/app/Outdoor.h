@@ -17,6 +17,9 @@ public:
 	double hum();
 	quint32 light();
 
+signals:
+	void meas(const QByteArray &sens,const QByteArray &val);
+
 private:
 	double mTemp,mHum;
 	quint32 mLight;
