@@ -95,6 +95,7 @@ QList<SensorDef> Room::mkSensors()
 	r.append(SensorDef(SensorDef::Type(SensorDef::U8,SensorDef::SINGLE,SensorDef::NO_TIME,1),"breezer_on"));
 	r.append(SensorDef(SensorDef::Type(SensorDef::U8,SensorDef::SINGLE,SensorDef::NO_TIME,1),"uflamp_on"));
 	r.append(SensorDef(SensorDef::Type(SensorDef::U8,SensorDef::SINGLE,SensorDef::NO_TIME,1),"door"));
+	r.append(SensorDef(SensorDef::Type(SensorDef::U32,SensorDef::SINGLE,SensorDef::NO_TIME,1),"pwr"));
 	return r;
 }
 
@@ -198,7 +199,7 @@ void Room::onDoorCloseTimer()
 
 void Room::updatePwrSens()
 {
-	double pwr=0;
+	quint32 pwr=0;
 	if(heaterOn)
 		pwr+=1500;
 	if(condOn)
@@ -209,5 +210,5 @@ void Room::updatePwrSens()
 		pwr+=50;
 	if(lightOn)
 		pwr+=100;
-	emit meas("pwr",QByteArray::number(pwr,'g',6));
+	emit meas("pwr",QByteArray::number(pwr));
 }
