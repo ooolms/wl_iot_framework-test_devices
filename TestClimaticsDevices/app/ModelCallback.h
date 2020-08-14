@@ -16,6 +16,9 @@ public:
 	void setOutdoor(Outdoor *o);
 	virtual bool processCommand(const QByteArray &cmd,const QByteArrayList &args,QByteArrayList &retVal)override;
 
+protected:
+	virtual void prepareState(WLIOT::DeviceState &st)override;
+
 private slots:
 	void onMeas(const QByteArray &sens,const QByteArray &val);
 

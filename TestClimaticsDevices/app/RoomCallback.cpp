@@ -92,6 +92,18 @@ WLIOT::ControlsGroup RoomCallback::mkControls()
 	return grp;
 }
 
+void RoomCallback::prepareState(DeviceState &st)
+{
+	st.commandParams.clear();
+	st.additionalAttributes.clear();
+	st.commandParams["heater"][0]="0";
+	st.commandParams["cond"][0]="0";
+	st.commandParams["humid"][0]="0";
+	st.commandParams["light"][0]="0";
+	st.commandParams["breezer"][0]="0";
+	st.commandParams["uflamp"][0]="0";
+}
+
 void RoomCallback::onMeas(const QByteArray &sens,const QByteArray &val)
 {
 	qDebug()<<"room "<<dev->room->roomName()<<" "<<sens<<":"<<val;

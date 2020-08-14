@@ -39,7 +39,7 @@ private:
 	Outdoor *mOutdoor;
 	QTimer peopleUpdateTimer,doorCloseTimer;
 	QByteArray mRoomName;
-	quint32 peopleCount,newPeopleCount;
+	quint32 mPeopleCount,newPeopleCount;
 	//sensors
 	double tempSens,humSens;
 	quint32 co2Sens;

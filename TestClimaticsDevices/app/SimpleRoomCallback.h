@@ -22,6 +22,9 @@ public:
 	virtual bool processCommand(const QByteArray &cmd,const QByteArrayList &args,QByteArrayList &retVal)override;
 	WLIOT::ControlsGroup mkControls();
 
+protected:
+	virtual void prepareState(WLIOT::DeviceState &st)override;
+
 private slots:
 	void onMeas(const QByteArray &sens,const QByteArray &val);
 	void onStateChanged(const QByteArray &cmd,quint32 index,const QByteArray &val);

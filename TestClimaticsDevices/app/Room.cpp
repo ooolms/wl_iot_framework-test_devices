@@ -12,7 +12,7 @@ Room::Room(Outdoor *out,const QByteArray roomN,QObject *parent)
 	tempSens=22;
 	humSens=30;
 	co2Sens=400;
-	peopleCount=0;
+	mPeopleCount=0;
 	newPeopleCount=0;
 	heaterOn=condOn=humidOn=ufLampOn=lightOn=breezerOn=false;
 	peopleUpdateTimer.setInterval(2000);
@@ -65,7 +65,7 @@ void Room::onTimer()
 	if(light>globalMaxLight)
 		light=globalMaxLight;
 	//co2
-	quint32 co2Delta=50*peopleCount;
+	quint32 co2Delta=50*mPeopleCount;
 	if(breezerOn)
 		co2Delta-=80;
 	co2Sens+=co2Delta;
@@ -118,7 +118,7 @@ void Room::onStart()
 
 void Room::setPeopleCount(quint32 c)
 {
-	if(peopleCount==c)return;
+	if(mPeopleCount==c)return;
 	peopleUpdateTimer.stop();
 	doorCloseTimer.stop();
 	newPeopleCount=c;
@@ -186,8 +186,8 @@ void Room::setUFLamp(bool on)
 
 void Room::onUpdatePeopleCountTimer()
 {
-	peopleCount=newPeopleCount;
-	emit meas("people",QByteArray::number(peopleCount));
+	mPeopleCount=newPeopleCount;
+	emit meas("people",QByteArray::number(mPeopleCount));
 	doorCloseTimer.start();
 }
 

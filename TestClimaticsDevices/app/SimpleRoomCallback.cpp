@@ -33,6 +33,13 @@ WLIOT::ControlsGroup SimpleRoomCallback::mkControls()
 	return grp;
 }
 
+void SimpleRoomCallback::prepareState(DeviceState &st)
+{
+	st.commandParams.clear();
+	st.additionalAttributes.clear();
+	st.commandParams["light"][0]="0";
+}
+
 void SimpleRoomCallback::onMeas(const QByteArray &sens,const QByteArray &val)
 {
 	qDebug()<<"room "<<dev->room->roomName()<<" "<<sens<<":"<<val;
