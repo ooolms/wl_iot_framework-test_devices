@@ -37,9 +37,7 @@ void Outdoor::setHum(double h)
 void Outdoor::setLight(quint32 l)
 {
 	mLight=l;
-	if(mLight<globalMinLight)
-		mLight=globalMinLight;
-	else if(mLight>globalMaxLight)
+	if(mLight>globalMaxLight)
 		mLight=globalMaxLight;
 }
 

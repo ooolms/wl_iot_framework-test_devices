@@ -1,0 +1,29 @@
+<VDIL_program>
+ <virtual_device enabled="0" device_id="{00000000-0000-0000-0000-000000000000}" device_name="">
+  <controls>
+   <group title=""/>
+  </controls>
+  <sensors/>
+ </virtual_device>
+ <blocks>
+  <block values_type="u8_sv_gt" use_trigger="1" group="core" count="1" name="storage_source" title="door" position_y="-499" need_device="0" dev_id="{00954b46-b561-44ce-b090-af636f063fea}" sensor_name="door" position_x="-1084" id="1"/>
+  <block group="core" name="comparation" title="not 0" position_y="-476" operation="!=" position_x="-833" dim_index="0" external_v2_input="0" id="3" out_mode="bool">
+   <dist_value value="1" dim="1" type="single"/>
+   <v2_value value="0" dim="1" type="single"/>
+  </block>
+  <block values_type="u32_sv_gt" use_trigger="1" group="core" count="1" name="storage_source" title="people" position_y="-265" need_device="0" dev_id="{00954b46-b561-44ce-b090-af636f063fea}" sensor_name="people" position_x="-1087" id="4"/>
+  <block group="core" name="comparation" title="not 0" position_y="-240" operation="!=" position_x="-832" dim_index="0" external_v2_input="0" id="5" out_mode="bool">
+   <dist_value value="1" dim="1" type="single"/>
+   <v2_value value="0" dim="1" type="single"/>
+  </block>
+  <block enable_condition_input="0" group="core" name="command" title="light" position_y="-319" dev_id="{00954b46-b561-44ce-b090-af636f063fea}" args="${0}" inputs_count="1" position_x="-286" id="6" cmd="light"/>
+  <block group="logic" name="or" title="or" position_y="-343" position_x="-588" id="7"/>
+ </blocks>
+ <links>
+  <link from="1" to="3" to_index="0" from_index="0"/>
+  <link from="4" to="5" to_index="0" from_index="0"/>
+  <link from="7" to="6" to_index="0" from_index="0"/>
+  <link from="3" to="7" to_index="0" from_index="0"/>
+  <link from="5" to="7" to_index="1" from_index="0"/>
+ </links>
+</VDIL_program>
