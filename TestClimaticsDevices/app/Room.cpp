@@ -39,7 +39,7 @@ void Room::onTimer()
 		tempDelta-=0.2;
 		humDelta-=1;
 	}
-	if(!heaterOn&&!humidOn&&!condOn)
+	//outdoor
 	{
 		if(tempSens<mOutdoor->temp())
 			tempDelta+=0.1;
