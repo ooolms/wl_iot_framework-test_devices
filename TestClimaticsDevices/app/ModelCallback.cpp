@@ -105,6 +105,6 @@ void ModelCallback::prepareState(DeviceState &st)
 void ModelCallback::onMeas(const QByteArray &sens,const QByteArray &val)
 {
 	qDebug()<<"model "<<sens<<":"<<val;
-	if(mDev)
-		mDev->sendVDevMeasurement(sens,QByteArrayList()<<val);
+	if(devClient)
+		devClient->sendVDevMeasurement(sens,QByteArrayList()<<val);
 }

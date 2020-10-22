@@ -15,7 +15,8 @@ struct RoomDevice
 };
 
 class RoomCallback
-	:public WLIOTClient::VirtualDeviceCallback
+	:public QObject
+	,public WLIOTClient::VirtualDeviceCallback
 {
 	Q_OBJECT
 public:
