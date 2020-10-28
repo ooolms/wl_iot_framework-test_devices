@@ -1,7 +1,7 @@
 #ifndef SIMPLEROOMCALLBACK_H
 #define SIMPLEROOMCALLBACK_H
 
-#include "wliot/client/VirtualDeviceCallback.h"
+#include <wliot/client/VirtualDeviceCallback.h>
 #include "SimpleRoom.h"
 #include <QUuid>
 

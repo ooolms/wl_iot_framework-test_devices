@@ -1,11 +1,16 @@
 import qbs
 
-QtApplication
+CppApplication
 {
-	cpp.cxxLanguageVersion: "c++11"
 	consoleApplication: true
 	targetName: "TestClimaticsDevices"
-	Depends {name: "libwliotproxy"}
+	Depends {name: "Qt"; submodules: ["core","gui","network"]}
+	cpp.includePaths:[
+		"../../../wl_iot_framework/wliotproxy-src/libwliotproxy-base/include",
+		"../../../wl_iot_framework/wliotproxy-src/libVDIL/include",
+		"../../../wl_iot_framework/wliotproxy-src/libwliotproxy/include"
+	]
+	cpp.dynamicLibraries:["wliotproxy"]
 
 	Group
 	{

@@ -130,10 +130,11 @@ int main(int argc,char *argv[])
 	VirtualDeviceClient *modelCli;
 
 	ServerInstance srv;
+	srv.connection()->prepareAuth("climatics","");
 	srv.connection()->startConnectLocal();
 	if(!srv.connection()->waitForConnected())
 		return __LINE__;
-	if(!srv.connection()->authenticateLocalFromRoot("climatics"))
+	if(!srv.connection()->isReady())
 		return __LINE__;
 	wcRoom.cli=srv.devices()->registerVirtualDevice(wcRoom.uid,wcRoom.name,
 		wcRoom.room->mkSensors(),cbWcRoom.mkControls(),"",&cbWcRoom);
