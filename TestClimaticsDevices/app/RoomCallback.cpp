@@ -113,5 +113,5 @@ void RoomCallback::onMeas(const QByteArray &sens,const QByteArray &val)
 void RoomCallback::onStateChanged(const QByteArray &cmd,quint32 index,const QByteArray &val)
 {
 	qDebug()<<"room state "<<cmd<<":"<<index<<":"<<val;
-	commandParamStateChanged(cmd,index,val);
+	dev->cli->commandParamStateChanged(cmd,index,val);
 }

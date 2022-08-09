@@ -1,10 +1,10 @@
 #include <QCoreApplication>
 #include <QTimer>
 #include <math.h>
-#include "wliot/client/ServerInstance.h"
-#include "wliot/client/VirtualDeviceClient.h"
-#include "wliot/client/VirtualDeviceCallback.h"
-#include "wliot/storages/ISensorStorage.h"
+#include <wliot/client/ServerInstance.h>
+#include <wliot/client/VirtualDeviceClient.h>
+#include <wliot/client/VirtualDeviceCallback.h>
+#include <wliot/storages/SensorStorage.h>
 #include "StdQFile.h"
 #include "RoomCallback.h"
 #include "SimpleRoomCallback.h"

@@ -49,5 +49,5 @@ void SimpleRoomCallback::onMeas(const QByteArray &sens,const QByteArray &val)
 void SimpleRoomCallback::onStateChanged(const QByteArray &cmd,quint32 index,const QByteArray &val)
 {
 	qDebug()<<"room state "<<cmd<<":"<<index<<":"<<val;
-	commandParamStateChanged(cmd,index,val);
+	dev->cli->commandParamStateChanged(cmd,index,val);
 }
